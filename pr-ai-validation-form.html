@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>PR / AI Validation Form</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#f7fafc;color:#0f172a;padding:24px}
+    .card{max-width:780px;margin:0 auto;background:#fff;padding:18px;border-radius:10px;box-shadow:0 6px 24px rgba(15,23,42,.06)}
+    label{display:block;margin-top:12px;font-weight:600}
+    input,textarea,select{width:100%;padding:8px 10px;border:1px solid #e2e8f0;border-radius:8px;margin-top:6px}
+    button{margin-top:14px;padding:10px 14px;border-radius:8px;border:none;background:#0ea5a9;color:#fff;font-weight:700}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h2>PR / AI Validation</h2>
+    <p style="color:#64748b">Use this form to capture PR metadata or AI review notes for manual or automated validation workflows.</p>
+
+    <label for="pr-title">PR Title</label>
+    <input id="pr-title" name="pr_title" placeholder="Short descriptive PR title">
+
+    <label for="pr-url">PR URL</label>
+    <input id="pr-url" name="pr_url" placeholder="https://github.com/owner/repo/pull/123">
+
+    <label for="author">Author</label>
+    <input id="author" name="author" placeholder="github-username">
+
+    <label for="type">Validation Type</label>
+    <select id="type" name="type">
+      <option value="manual">Manual Review</option>
+      <option value="ai">AI Review</option>
+      <option value="ci">CI Only</option>
+    </select>
+
+    <label for="notes">Notes (optional)</label>
+    <textarea id="notes" name="notes" rows="6" placeholder="Summary, checklist, or AI observations"></textarea>
+
+    <button id="save" onclick="onSave(event)">Save / Export</button>
+
+    <pre id="out" style="margin-top:12px;display:none;background:#0f172a;color:#f8fafc;padding:12px;border-radius:8px;overflow:auto"></pre>
+  </main>
+
+  <script>
+    function onSave(e){e.preventDefault();const data={title:document.getElementById('pr-title').value,url:document.getElementById('pr-url').value,author:document.getElementById('author').value,type:document.getElementById('type').value,notes:document.getElementById('notes').value};const out=document.getElementById('out');out.style.display='block';out.textContent=JSON.stringify(data,null,2);navigator.clipboard?.writeText(JSON.stringify(data))}
+  </script>
+</body>
+</html>
